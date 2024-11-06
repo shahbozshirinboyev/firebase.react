@@ -1,4 +1,7 @@
+import { firebaseData  } from "./firebase";
+
 function App() {
+  firebaseData();
   return (
     <>
       <div>firebase.react</div>
