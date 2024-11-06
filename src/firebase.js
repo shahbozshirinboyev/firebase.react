@@ -25,11 +25,13 @@ const db = getFirestore(app);
 
 // Asynchronous function to get data from Firestore
 const firebaseData = async () => {
-    try {
-        const querySnapshot = await getDocs(collection(db, "Foother")); // "Foother" kolleksiyasini olish
 
-        // Har bir hujjatni massivga qo'shish
+    try {
+
+        const querySnapshot = await getDocs(collection(db, "Footer")); // "Foother" kolleksiyasini olish
+
         const documentsArray = [];
+
         querySnapshot.forEach((doc) => {
             documentsArray.push({ id: doc.id, ...doc.data() });
         });
@@ -38,6 +40,7 @@ const firebaseData = async () => {
     } catch (error) {
         console.error("Error fetching documents:", error);
     }
+
 };
 
 export { firebaseData }
