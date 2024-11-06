@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, getDoc, getDocs } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,16 +26,17 @@ const db = getFirestore(app);
 // Asynchronous function to get data from Firestore
 const firebaseData = async () => {
     try {
-        const docRef = doc(db, "Foother", "FootherInfo");
-        const docSnap = await getDoc(docRef);
+        const querySnapshot = await getDocs(collection(db, "Foother")); // "Foother" kolleksiyasini olish
 
-        if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-        } else {
-            console.log("No such document!");
-        }
+        // Har bir hujjatni massivga qo'shish
+        const documentsArray = [];
+        querySnapshot.forEach((doc) => {
+            documentsArray.push({ id: doc.id, ...doc.data() });
+        });
+
+        console.log("Barcha hujjatlar:", documentsArray);
     } catch (error) {
-        console.error("Error fetching document:", error);
+        console.error("Error fetching documents:", error);
     }
 };
 
